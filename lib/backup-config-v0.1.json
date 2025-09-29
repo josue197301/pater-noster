@@ -1,0 +1,35 @@
+{
+	"bkstore": {
+		"server": "172.22.99.203",
+		"sharedfolder": "chov",
+		"username": "backup",
+		"password": "v!V4@M3x1c0",
+		"driveletter": "B:",
+		"backupDest": "\\backup\\office"
+	},
+	"paths": {
+		"appPath": "D:\\Dev\\Backup",
+		"appLib": "D:\\Dev\\pn\\lib",
+		"appLog": "D:\\Dev\\pn\\log"
+	},
+	"database": {
+		"host": "172.22.96.160",
+		"username": "backup",
+		"dbname": "backup",
+		"psqlpath": "C:\\Program Files\\PostgreSQL\\13\\bin\\psql.exe"
+	},
+	"backupCatalogs": {
+		"MG1": {
+			"fsPath": "/data/DataLV/smbshares/"
+		},
+		"OV1": {
+			"fsPath": "E:\\CHPEO"
+		},
+		"OV2": {
+			"fsPath": "E:\\CHPEO"
+		},
+		"TESTE1": {
+			"fsPath": "D:\\Dev\\pn\\Temp"
+		}
+	}
+}
