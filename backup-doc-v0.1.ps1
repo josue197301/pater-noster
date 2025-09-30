@@ -20,7 +20,7 @@ if ( !(Test-Path $args[0]) ) {
 # define data com base no segundo argumento
 $age = (Get-Date).AddDays(-$args[1])
 
-Get-ChildItem $args[0] -Recurse -File | foreach{
+Get-ChildItem $args[0] -Recurse -File | ForEach-Object{
 	#$_ | Select-Object -Property *
 
 }
