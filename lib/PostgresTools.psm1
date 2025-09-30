@@ -1,7 +1,7 @@
 # PostgresTools.psm1
 function Invoke-PostgresQuery {
     param (
-        [string]$Host,
+        [string]$PgHost,
         [string]$Database,
         [string]$User,
         [string]$Query,
@@ -17,7 +17,7 @@ function Invoke-PostgresQuery {
         [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
         [Console]::InputEncoding = [System.Text.Encoding]::UTF8
 
-        $pgcmd = "`"$PsqlPath`" -h $Host -U $User -d $Database --csv -c `"$Query`""
+        $pgcmd = "`"$PsqlPath`" -h $PgHost -U $User -d $Database --csv -c `"$Query`""
         $result = cmd.exe /c $pgcmd
 
         if ($OutputFile) {
