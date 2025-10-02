@@ -39,7 +39,7 @@ Get-ChildItem $args[0] -Directory | ForEach-Object {
         $fp = Get-FileProperties -FilePath  "$($_.FullName)"
         $fp.baseDir + "\" +$fp.baseName
         # formar query de busca
-        $queryBuscaArquivo = "select max(arq_id), arq_nome, arq_path, date_trunc('minute',arq_ts_mod) as arq_ts_modif from arquivo WHERE date_trunc('minute', arq_ts_mod) = '$($fp.tsMod_F)'::timestamp AND arq_nome='$($fp.baseName)' AND arq_tam='$($fp.size)' AND arq_tipo='$($fp.extension)' group by arq_nome, arq_path, arq_ts_mod;";
+        $queryBuscaArquivo = "select max(arq_id), arq_nome, arq_path, date_trunc('minute',arq_ts_mod) as arq_ts_modif from arquivo WHERE date_trunc('minute', arq_ts_mod) = '$($fp.tsMod_F)'::timestamp AND arq_nome='$($fp.baseName)' AND arq_tam='$($fp.size)' group by arq_nome, arq_path, arq_ts_mod;";
         $queryBuscaArquivo ;
         # buscar correspondencia no banco
         $resBusca = Invoke-PostgresQuery -PgHost "$($config.database.host)" -Database "$($config.database.dbname)" -User "$($config.database.username)" -Query "$($queryBuscaArquivo)" -ReturnAsCsvObject;

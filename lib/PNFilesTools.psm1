@@ -1,4 +1,8 @@
-# SMBFileTools.psm1
+# PNFilesTools.psm1
+#
+# Módulo PowerShell para manipulação de arquivos e diretórios
+
+# Get-FileProperties: Método para obter propriedades detalhadas de um arquivo
 function Get-FileProperties {
     param (
         [string]$FilePath = ""
@@ -47,5 +51,22 @@ function Get-FileProperties {
     }
     catch {
         Write-Error "Erro: $_"
+    }
+}
+
+# Compress-File: Método para compactar um arquivo em um arquivo ZIP
+function Compress-File {
+    param (
+        [string]$FileDir,
+        [string]$FileName,
+        [string]$ZipDir,
+        [string]$ZipFileName
+    )
+    try {
+        Compress-Archive -Path "$($FileDir)\$($FileName)" -DestinationPath "$($ZipDir)\$($ZipFileName)" -Force
+        Write-Host "Arquivo compactado com sucesso: $($ZipDir)\$($ZipFileName)"
+    }
+    catch {
+        Write-Error "Erro ao compactar o arquivo: $_"
     }
 }
