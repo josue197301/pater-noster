@@ -36,6 +36,7 @@ Get-ChildItem $args[0] -Directory | ForEach-Object {
     Get-ChildItem "$($_.FullName)" -File -Recurse | ForEach-Object {
         #Write-Output "---- $($_.FullName)"
         $fp = Get-FileProperties -FilePath  "$($_.FullName)"
-        $fp
+        $fp | Format-Table
+
     }
 }
