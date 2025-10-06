@@ -38,3 +38,19 @@ function Invoke-PostgresQuery {
         [Console]::InputEncoding = $originalInputEncoding
     }
 }
+
+function Format-SQLFileInsert {
+    param (
+        [PSCustomObject[]]$FileProperties
+    )
+    # $sqlInsertArquivo = "INSERT INTO arquivo (arq_nome, ..." #arq_path, arq_tam, arq_ts_mod, arq_ts_acess, arq_ext, arq_user, arq_domainuser, arq_hash_md5) VALUES "
+    # CustomObject para armazenar queries
+    # $FileProperties
+    $insertQueries = [pscustomobject]@{
+        Arquivo	= "INSERT INTO arquivo (arq_nome, ...";
+        Grupos = @();
+    }
+    $insertQueries.Grupos += "INSERT 1 INTO grupos (arq_nome, ...";
+    $insertQueries.Grupos += "INSERT 2 INTO grupos (arq_nome, ...";
+    return $insertQueries
+}

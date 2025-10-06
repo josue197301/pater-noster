@@ -1,5 +1,5 @@
-﻿Import-Module  ".\lib\PNFilesTools.psm1"
-Import-Module  ".\lib\PNDataTools.psm1"
+﻿Import-Module  ".\lib\PNFilesTools.psm1" -Force
+Import-Module  ".\lib\PNDataTools.psm1" -Force
 
 # Carrega JSON de configuracoes
 $configPath = ".\lib\backup-config-v0.1.json"
@@ -36,6 +36,8 @@ Get-ChildItem $args[0] -Directory | ForEach-Object {
     #Write-Output "$($_.FullName)"
 
     Get-ChildItem "$($_.FullName)" -File -Recurse | ForEach-Object {
+        Write-Host "==========================================================================`n"
+        $_.FullName
         $fp = Get-FileProperties -FilePath  "$($_.FullName)"
         $fp.baseDir + "\" +$fp.baseName
         # formar query de busca
@@ -43,12 +45,17 @@ Get-ChildItem $args[0] -Directory | ForEach-Object {
         $queryBuscaArquivo ;
         # buscar correspondencia no banco
         $resBusca = Invoke-PostgresQuery -PgHost "$($config.database.host)" -Database "$($config.database.dbname)" -User "$($config.database.username)" -Query "$($queryBuscaArquivo)" -ReturnAsCsvObject;
-        Write-Host "------------------`n# Ts - "$fp.baseName": "$fp.tsMod_F" | "$fp.tsMod
+        Write-Host "Buscar - "$fp.baseName": "$fp.tsMod_F" | "$fp.tsMod
         if ( $resBusca.Count  -gt 0 ){ # encontrou correspondencia
-            Write-Host "### Encontrado no banco: "$resBusca.arq_nome" | "$resBusca.arq_path" | "$resBusca.arq_ts_modif;
+            Write-Host "### ENCONTRADO no banco: "
             $resBusca.arq_ts_modif
         } else { # registrar no banco e zipar
-            
+            Write-Host "### NÃO ENCONTRADO no banco: $($_.FullName)";
+            $fp | Add-Member -MemberType NoteProperty -Name hashMD5 -Value $( Get-FileHash -Path "$($_.FullName)"  -Algorithm MD5 ).Hash.ToLower()
+            $fp.hashMd5
+            $fq = Format-SQLFileInsert -FileProperties $fp
+            $fq
+            Write-Host "### --------------------------------------------"
             # formar o nome do arquivo para zipar
             # - tirar md5 ? <não>
 
