@@ -54,7 +54,9 @@ Get-ChildItem $args[0] -Directory | ForEach-Object {
             $fp | Add-Member -MemberType NoteProperty -Name hashMD5 -Value $( Get-FileHash -Path "$($_.FullName)"  -Algorithm MD5 ).Hash.ToLower()
             $fp.hashMd5
             $fq = Format-SQLFileInsert -FileProperties $fp
-            $fq
+            $fq.Arquivo;
+            $fq.Grupos[0]
+            #$fq.Grupos[1];
             Write-Host "### --------------------------------------------"
             # formar o nome do arquivo para zipar
             # - tirar md5 ? <não>
