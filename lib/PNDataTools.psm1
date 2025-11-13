@@ -46,7 +46,14 @@ function Format-SQLFileInsert {
     # $sqlInsertArquivo = "INSERT INTO arquivo (arq_nome, ..." #arq_path, arq_tam, arq_ts_mod, arq_ts_acess, arq_ext, arq_user, arq_domainuser, arq_hash_md5) VALUES "
     # CustomObject para armazenar queries
     #$insertQueries = "asdfg"
-    
+    <# insert 
+        into pn.stored_file (sfi_id, sfi_relative_path, sfi_name, 
+                            sfi_volume_id, sfi_size_bytes, sfi_last_modified, 
+                            sfi_last_access, sfi_hash_md5, sfi_user_id) 
+        values (1, 'docs', 'file1.txt', 
+                            1, 1234, '2024-06-01 12:00:00', 
+                            '2024-06-10 12:00:00', 'd41d8cd98f00b204e9800998ecf8427e', 1);
+    #>
     $insertQueries = [pscustomobject]@{
         Arquivo	= "INSERT INTO arquivo (arq_nome, ...";
         Grupos = @();
